@@ -1,0 +1,10 @@
+/pyvenv.cfg
+/Scripts/
+/Lib/
+/Day1/.idea/
+/.idea/AdventOfCode.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
