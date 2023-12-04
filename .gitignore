@@ -13,3 +13,7 @@
 /Day2/.vs
 /Day2/bin
 /Day2/obj
+*.xml
+*.iml
+*.class
+Day4/Day4/out/
