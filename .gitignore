@@ -1,11 +1,12 @@
 
 /Scripts/
 /Lib/
-/Day1/.idea/
-/Day2/.vs
-/Day2/bin
-/Day2/obj
-Day4/Day4/out/
+/*/.idea/
+/*/.vs/
+/*/bin/
+/*/obj/
+*/*/out/
+*/out/
 *.txt
 *.xml
 *.iml
