@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace Day7
 {
-    internal static class Parser
+    internal static partial class Parser
     {
         private static string[] ReadFile()
         {
@@ -16,7 +11,7 @@ namespace Day7
 
         private static Hand ParseLine(string line)
         {
-            MatchCollection matches = Regex.Matches(line, @"\S+");
+            MatchCollection matches = CardData().Matches(line);
 
             return new Hand(matches[0].Value, int.Parse(matches[1].Value));
         }
@@ -25,5 +20,8 @@ namespace Day7
         {
             return ReadFile().Select(ParseLine).ToList();
         }
+
+        [GeneratedRegex("\\S+")]
+        private static partial Regex CardData();
     }
 }

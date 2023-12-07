@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Day7
+﻿namespace Day7
 {
     internal class Hand: IComparable<Hand>
     {
-        public enum Type
+        public enum CardType
         {
             HighCard,
             OnePair,
@@ -19,68 +13,72 @@ namespace Day7
             FiveOfAKind
         }
 
-        public Type type { get; private set;}
-        public List<char> cards { get; private set;}
-        public int bid { get; private set;}
-        public int rank;
+        public CardType Type { get; private set;}
+        public List<char> Cards { get; private set;}
+        public int Bid { get; private set;}
+        public int Rank;
 
         public Hand(string hand, int bid)
         {
-            cards = GetCardsInHand(hand);
+            Cards = GetCardsInHand(hand);
 
-            this.bid = bid;
+            Bid = bid;
 
-            type = GetHandType(cards);
+            Type = GetHandType(Cards);
         }
 
-        private List<char> GetCardsInHand(string hand)
+        private static List<char> GetCardsInHand(string hand)
         {
             return hand.Trim().ToList();
         }
 
-        private Type GetHandType(List<char> cards)
+        private static CardType GetHandType(List<char> cards)
         {
             List<IGrouping<char, char>> cardGroups =
                 cards.GroupBy(card => card).OrderByDescending(group => group.Count()).ToList();
 
             return cardGroups[0].Count() switch
             {
-                5 => Type.FiveOfAKind,
-                4 => Type.FourOfAKind,
-                3 => cardGroups[1].Count() == 2 ? Type.FullHouse : Type.ThreeOfAKind,
-                2 => cardGroups[1].Count() == 2 ? Type.TwoPair : Type.OnePair,
-                _ => Type.HighCard,
+                5 => CardType.FiveOfAKind,
+                4 => CardType.FourOfAKind,
+                3 => cardGroups[1].Count() == 2 ? CardType.FullHouse : CardType.ThreeOfAKind,
+                2 => cardGroups[1].Count() == 2 ? CardType.TwoPair : CardType.OnePair,
+                _ => CardType.HighCard,
             };
         }
 
-        public int CompareTo(Hand other)
+        public int CompareTo(Hand? other)
         {
             // First, compare hand types
-            int typeComparison = type.CompareTo(other.type);
+            int typeComparison = Type.CompareTo(other?.Type);
             if (typeComparison != 0)
             {
-                return typeComparison; // Higher type is stronger
+                return typeComparison;
             }
 
-            // If types are the same, compare the entire set of cards
-            for (int i = 0; i < cards.Count; i++)
+            for (int i = 0; i < Cards.Count; i++)
             {
-                int cardComparison = CompareCard(cards[i], other.cards[i]);
+                int cardComparison = CompareCard(Cards[i], other?.Cards[i]);
                 if (cardComparison != 0)
                 {
-                    return cardComparison; // Higher card is stronger
+                    return cardComparison;
                 }
             }
 
-            return 0; // Hands are identical
+            return 0;
         }
 
-        private static int CompareCard(char card1, char card2)
+        private static int CompareCard(char? card1, char? card2)
         {
+            if (card1 == null || card2 == null)
+            {
+                throw new NullReferenceException("Cannot compare null cards");
+            }
+
             string cardOrder = "23456789TJQKA";
 
-            int index1 = cardOrder.IndexOf(card1);
-            int index2 = cardOrder.IndexOf(card2);
+            int index1 = cardOrder.IndexOf((char)card1);
+            int index2 = cardOrder.IndexOf((char)card2);
 
             return index1.CompareTo(index2);
         }
