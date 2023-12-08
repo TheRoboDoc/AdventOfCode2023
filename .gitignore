@@ -1,12 +1,18 @@
 
 /Scripts/
 /Lib/
+
 /*/.idea/
 /*/.vs/
 /*/bin/
 /*/obj/
-*/*/out/
-*/out/
+/*/out/
+
+/*/*/.vs/
+/*/*/bin/
+/*/*/obj/
+/*/*/out/
+
 *.txt
 *.xml
 *.iml
